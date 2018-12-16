@@ -6,10 +6,15 @@ const Role = require('../_helpers/role');
 
 // routes
 router.post('/authenticate', authenticate);     // public route
+router.get('/doctor-drug', authorize([Role.Doctor, Role.Drug]), getPrescription);       // doctor and drug user
 router.get('/', authorize(Role.Admin), getAll); // admin only
 router.get('/:id', authorize(), getById);       // all authenticated users
 module.exports = router;
 
+
+function getPrescription(req, res, next) {
+    return res.json({"message":"this is for doctor and drug"});
+}
 function authenticate(req, res, next) {
     userService.authenticate(req.body)
         .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))

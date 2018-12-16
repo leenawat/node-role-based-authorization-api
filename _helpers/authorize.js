@@ -16,7 +16,7 @@ function authorize(roles = []) {
 
         // authorize based on user role
         (req, res, next) => {
-            if (roles.length && !roles.includes(req.user.role)) {
+            if (roles.length && !hasAnyRole(roles, req)) {
                 // user's role is not authorized
                 return res.status(401).json({ message: 'Unauthorized' });
             }
@@ -25,4 +25,17 @@ function authorize(roles = []) {
             next();
         }
     ];
+}
+
+function hasAnyRole(roles, req) {
+    if(typeof req.user.role === 'string'){
+        return roles.includes(req.user.role)
+    }else if(typeof req.user.role === 'object'){
+        const role = req.user.role;
+        return roles.some(rolea => {
+            return role.some(roleb => {
+              return rolea == roleb;
+            });
+        });
+    }
 }

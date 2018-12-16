@@ -5,7 +5,9 @@ const Role = require('../_helpers/role');
 // users hardcoded for simplicity, store in a db for production applications
 const users = [
     { id: 1, username: 'admin', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
-    { id: 2, username: 'user', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
+    { id: 2, username: 'drug', password: 'drug', firstName: 'Normal', lastName: 'User', role: Role.Drug },
+    { id: 3, username: 'doctor', password: 'doctor', firstName: 'Normal', lastName: 'User', role: [Role.Doctor, Role.Drug] },
+    { id: 4, username: 'finance', password: 'finance', firstName: 'Normal', lastName: 'User', role: Role.Finance }
 ];
 
 module.exports = {
